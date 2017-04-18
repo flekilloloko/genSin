@@ -2,3 +2,7 @@ se necesitarán barrer 5 potenciómetros (x00K, x0K, xK, x00, xx)
 y actualizar el registro del AD9850
 de eso se va a encargar el loop, calculo toma un promedio de medidas, para evitar ruidos (3 o 4 muestras)
 tambien se puede colocar un verificador de variaciones bruscas (buena idea)
+
+
+COMPRAR:
+	4051 -> mux analógico de 3 bits
