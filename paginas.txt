@@ -1,0 +1,10 @@
+http://www.convertunits.com/from/thou/to/mm
+http://electronicabyp.com.ar/buscar.php?buscar=perilla
+http://www.bbc.com/mundo/noticias/2015/01/150102_tecnologia_uso_distinto_de_sensores_celular_ig
+https://electronics.stackexchange.com/questions/179233/making-lm78xx-fail-safe-against-short-open-reverese-bias-flyback-etc
+https://www.sparkfun.com/datasheets/Components/LM7805.pdf
+http://www.edaboard.com/thread211438.html
+https://www.google.com.ar/search?q=ad9850&source=lnms&tbm=isch&sa=X&sqi=2&ved=0ahUKEwjG6Mb9kPDTAhWHhJAKHQDqAvAQ_AUIBigB&biw=1350&bih=642#imgrc=c9TBDg60EbWs2M:
+
+http://www.analog.com/media/en/technical-documentation/data-sheets/AD9850.pdf
+http://robert.butera.org/wp-content/uploads/2015/11/EIM377_AD9850_Signal_Generator_Module_V01.pdf

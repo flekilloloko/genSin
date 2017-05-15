@@ -1,7 +1,7 @@
 int W_CLK = 2;
 int FQ_UP = 3;
 int RESET = 4;
-int D0 = 5, D1 = 6, D2 = 7, D3 = 8, D4 = 9, D5 = 10, D6 = 11, D7 = 12;
+int D0 = 12, D1 = 11, D2 = 10, D3 = 9, D4 = 8, D5 = 7, D6 = 6, D7 = 5;
 int palabra, resto, leer, i;
 double frec;
 long lectura;
