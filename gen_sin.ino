@@ -13,72 +13,71 @@ void setup() {
   pinMode(W_CLK, OUTPUT);
   pinMode(FQ_UP, OUTPUT);
   pinMode(RESET, OUTPUT);
-  pinMode(D0, OUTPUT); pinMode(D1, OUTPUT); pinMode(D2, OUTPUT); pinMode(D3, OUTPUT); pinMode(D4, OUTPUT); pinMode(D5, OUTPUT); pinMode(D6, OUTPUT); pinMode(D7, OUTPUT);
-  pinMode(POTE1, OUTPUT); pinMode(POTE2, OUTPUT); pinMode(POTE3, OUTPUT); pinMode(POTE4, OUTPUT); pinMode(POTE5, OUTPUT); 
+  //pinMode(D0, OUTPUT); pinMode(D1, OUTPUT); pinMode(D2, OUTPUT); pinMode(D3, OUTPUT); pinMode(D4, OUTPUT); pinMode(D5, OUTPUT); pinMode(D6, OUTPUT); pinMode(D7, OUTPUT);
+ // pinMode(POTE1, OUTPUT); pinMode(POTE2, OUTPUT); pinMode(POTE3, OUTPUT); pinMode(POTE4, OUTPUT); pinMode(POTE5, OUTPUT); 
   //      x00K                     x0K                    xK                       x00			           xx
   pinMode(SW, INPUT);
   digitalWrite(W_CLK, LOW);
   digitalWrite(FQ_UP, LOW);
   digitalWrite(RESET, LOW);
-  digitalWrite(POTE1, LOW); digitalWrite(POTE2, LOW); digitalWrite(POTE3, LOW); digitalWrite(POTE4, LOW); digitalWrite(POTE5, LOW); 
+//  digitalWrite(POTE1, LOW); digitalWrite(POTE2, LOW); digitalWrite(POTE3, LOW); digitalWrite(POTE4, LOW); digitalWrite(POTE5, LOW); 
 }
 
 void loop() {
   //1.073.883 = 1M(999.999,8496)		107388 = 100k(99.999,7056)		10739 = 10k(10.000,1568)		1074 = 1k (1.000,1088)	107 = 100 (99,6384)
-  digitalWrite(POTE1, HIGH); digitalWrite(POTE5, LOW);	//cientos
+//  digitalWrite(POTE1, HIGH); digitalWrite(POTE5, LOW);	//cientos
   delay(retardo);
-  lectura = analogRead(POTE);
+  lectura = analogRead(A3);
   if (lectura>969) lectura = 1023;
   for (i=0;i<10;i++) 
 	  if((lectura>=102*i)&&(lectura<102*(i+1))) 
-		  lectura = 102*i;
-  frec = lectura * 107;
+		  frec = 3436L*i;
+  //frec = lectura * 107;
   
-  digitalWrite(POTE2, HIGH); digitalWrite(POTE1, LOW);	//miles
-  delay(retardo);
-  lectura = analogRead(POTE);
+//  digitalWrite(POTE2, HIGH); digitalWrite(POTE1, LOW);	//miles
+  /*delay(retardo);
+  lectura = analogRead(A4);
   if (lectura>969) lectura = 1023;
   for (i=0;i<20;i++) 
 	  if((lectura>=102*i)&&(lectura<102*(i+1))) 
-		  lectura = 102*i;
-  frec += lectura * 1074;
+		  frec += 32364L*i;
+  //frec += lectura * 1074;
   
-  digitalWrite(POTE1, HIGH); digitalWrite(POTE5, LOW);	//decenas de miles
+//  digitalWrite(POTE1, HIGH); digitalWrite(POTE5, LOW);	//decenas de miles
   delay(retardo);
-  lectura = analogRead(POTE);
+  lectura = analogRead(A5);
   if (lectura>969) lectura = 1023;
   for (i=0;i<20;i++) 
 	  if((lectura>=102*i)&&(lectura<102*(i+1))) 
-		  lectura = 102*i;
-  frec += lectura * 10739;
+		  frec += 343642L*i;
+  //frec += lectura * 10739;
   
-  digitalWrite(POTE1, HIGH); digitalWrite(POTE5, LOW); //cientos de miles
+  //digitalWrite(POTE1, HIGH); digitalWrite(POTE5, LOW); //cientos de miles
   delay(retardo);
-  lectura = analogRead(POTE);
+  lectura = analogRead(A6);
   if (lectura>969) lectura = 1023;
   for (i=0;i<20;i++) 
 	  if((lectura>=102*i)&&(lectura<102*(i+1))) 
-		  lectura = 102*i;
-  frec += lectura * 107388;
+		  frec += 343643L*i;
+  //frec += lectura * 107388;
   
   frecuency(frec);
-  delay(100);
+  delay(100);*/
 }
 
 void frecuency(long freq){
   palabra = 0;
   digitalWrite(RESET, HIGH); delay(1); digitalWrite(RESET, LOW);
   cargarDatos(palabra); //word 0    =   Fase y control
-  palabra = freq / 524288;
+  palabra = freq / 16777216L;
   cargarDatos(palabra); //word 1	=	Frec-b31 / Frec-b24
-  palabra = (freq & 524287 ) / 2048;		
+  palabra = (freq & 16777215 ) / 65536L;		  //-65535
   cargarDatos(palabra); //word 2	= 	Frec-b23 / Frec-b16
-  palabra = (freq & 2047 ) / 8;      								
+  palabra = (freq & 65535 ) / 256L;      								
   cargarDatos(palabra); //word 3	=	Frec-b15 / Frec-b8
-  palabra = (freq & 7    ) * 32;									// b5 = 0.9312 Hz
+  palabra = (freq & 255   ) ;									// b5 = 0.9312 Hz
   cargarDatos(palabra); //word 4	=	Frec-b7  / Frec-b0      // LSB = 0.0291 Hz
-  digitalWrite(FQ_UP, HIGH); digitalWrite(FQ_UP, LOW);
-  
+  digitalWrite(FQ_UP, HIGH); digitalWrite(FQ_UP, LOW); 
 }
 
 void cargarDatos(int data){
