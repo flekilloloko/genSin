@@ -1,10 +1,11 @@
 int W_CLK = 2;
 int FQ_UP = 3;
 int RESET = 4;
-int D0 = 12, D1 = 11, D2 = 10, D3 = 9, D4 = 8, D5 = 7, D6 = 6, D7 = 5;
+
+int D0 = 5, D1 = 6, D2 = 7, D3 = 8, D4 = 9, D5 = 10, D6 = 11, D7 = 12;
 int palabra, resto, leer, i;
-double frec;
-long lectura;
+long frec;
+int lectura;
 int SW = 13, POTE = 2;
 int retardo = 10 ;
 
@@ -13,10 +14,10 @@ void setup() {
   pinMode(W_CLK, OUTPUT);
   pinMode(FQ_UP, OUTPUT);
   pinMode(RESET, OUTPUT);
-  //pinMode(D0, OUTPUT); pinMode(D1, OUTPUT); pinMode(D2, OUTPUT); pinMode(D3, OUTPUT); pinMode(D4, OUTPUT); pinMode(D5, OUTPUT); pinMode(D6, OUTPUT); pinMode(D7, OUTPUT);
+  pinMode(D0, OUTPUT); pinMode(D1, OUTPUT); pinMode(D2, OUTPUT); pinMode(D3, OUTPUT); pinMode(D4, OUTPUT); pinMode(D5, OUTPUT); pinMode(D6, OUTPUT); pinMode(D7, OUTPUT);
  // pinMode(POTE1, OUTPUT); pinMode(POTE2, OUTPUT); pinMode(POTE3, OUTPUT); pinMode(POTE4, OUTPUT); pinMode(POTE5, OUTPUT); 
   //      x00K                     x0K                    xK                       x00			           xx
-  pinMode(SW, INPUT);
+ // pinMode(SW, INPUT);
   digitalWrite(W_CLK, LOW);
   digitalWrite(FQ_UP, LOW);
   digitalWrite(RESET, LOW);
@@ -60,9 +61,9 @@ void loop() {
 	  if((lectura>=102*i)&&(lectura<102*(i+1))) 
 		  frec += 343643L*i;
   //frec += lectura * 107388;
-  
+  */
   frecuency(frec);
-  delay(100);*/
+  delay(100);
 }
 
 void frecuency(long freq){
