@@ -1,17 +1,21 @@
+#include "AD9850.h"
+
 int W_CLK = 2;
 int FQ_UP = 3;
 int RESET = 4;
 
 int Dout = 5;
 int palabra, resto, leer, i;
-long frec;
+double frec;
 int lectura;
 int POTE1 = A1, POTE2 = A2, POTE3 = A3, POTE4 = A4, POTE5 = A5, POTE6 = A6;
-int retardo = 10 ;
+int retardo = 8 ;
 const float resolucion = 0.0291;
 
 
 void setup() {
+  Serial.begin(9800);
+  DDS.begin(W_CLK,FQ_UP,Dout,RESET);
   pinMode(W_CLK, OUTPUT);
   pinMode(FQ_UP, OUTPUT);
   pinMode(RESET, OUTPUT);
@@ -31,68 +35,41 @@ void loop() {
   delay(retardo);
   lectura = analogRead(POTE1);
   //lectura = constrain(lectura, 10, 1010);
-  frec = ((lectura*10/1024) / 0.0291);
+  frec = lectura*10/1024;
   
   delay(retardo);
   lectura = analogRead(POTE2);
   for (i=0;i<10;i++) 
     if((lectura>=102.4*i-51.2)&&(lectura<102.4*(i+1)-51.2))   // Se busca
-      frec += (10L*i / 0.0291);
+      frec += 10*i;
   
   delay(retardo);
   lectura = analogRead(POTE3);
   for (i=0;i<10;i++) 
 	  if((lectura>=102.4*i-51.2)&&(lectura<102.4*(i+1)-51.2))   // Se busca
-		  frec += (100L*i / 0.0291);
-  
-  delay(retardo);
-  lectura = analogRead(POTE4);
-  for (i=0;i<10;i++) 
-    if((lectura>=102.4*i-51.2)&&(lectura<102.4*(i+1)-51.2))   // Se busca
-		  frec += (long)(1000*i / 0.0291);
-  
-  delay(retardo);
-  lectura = analogRead(POTE5);
-  for (i=0;i<10;i++) 
-    if((lectura>=102.4*i-51.2)&&(lectura<102.4*(i+1)-51.2))   // Se busca
-		  frec += (10000L*i / 0.0291);
+		  frec += 100*i;
   
   delay(retardo);
   lectura = analogRead(POTE6);
   for (i=0;i<10;i++) 
     if((lectura>=102.4*i-51.2)&&(lectura<102.4*(i+1)-51.2))   // Se busca
-		  frec += (100000L*i / 0.0291);
+		  frec += 1000*i;
+  //DDS.setfreq((double)1500,0);
   
-  frecuency(frec);
-  delay(100);
-}
-
-void frecuency(long freq){
-  digitalWrite(RESET, HIGH); delay(1); digitalWrite(RESET, LOW);
-  palabra = freq / pow(2,24);
-  cargarDatos(palabra); //word 1	=	Frec-b31 / Frec-b24
-  palabra = (freq & (long)(pow(2,24)-1) ) / pow(2,16);		  //-65535
-  cargarDatos(palabra); //word 2	= 	Frec-b23 / Frec-b16
-  palabra = (freq & (long)(pow(2,16)-1) ) / pow(2,8);      								
-  cargarDatos(palabra); //word 3	=	Frec-b15 / Frec-b8
-  palabra = (freq & (long)(pow(2,8)-1)   ) ;									// b5 = 0.9312 Hz
-  cargarDatos(palabra); //word 4	=	Frec-b7  / Frec-b0      // LSB = 0.0291 Hz
-  palabra = 0;
-  cargarDatos(palabra); //word 0    =   Fase y control
-  digitalWrite(FQ_UP, HIGH); digitalWrite(FQ_UP, LOW); 
-}
-
-void cargarDatos(int data){
-  for(int i = 0; i<8 ; i++){
-    digitalWrite(Dout, bitRead(data,i)); 
-    cicloClock(); 
-  }
-}
-
-void cicloClock(){
-  digitalWrite(W_CLK, HIGH);
-  delayMicroseconds(1);
-  digitalWrite(W_CLK, LOW);
+  delay(retardo);
+  lectura = analogRead(POTE5);
+  for (i=0;i<10;i++) 
+    if((lectura>=102.4*i-51.2)&&(lectura<102.4*(i+1)-51.2))   // Se busca
+		  frec += 10000*i;
+  
+  delay(retardo);
+  lectura = analogRead(POTE4);
+  for (i=0;i<10;i++) 
+    if((lectura>=102.4*i-51.2)&&(lectura<102.4*(i+1)-51.2))   // Se busca
+		  frec += 100000*i;
+  
+  DDS.setfreq(frec,0);
+  delay(80);
 }
 
 
