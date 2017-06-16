@@ -5,4 +5,23 @@ tambien se puede colocar un verificador de variaciones bruscas (buena idea)
 
 
 COMPRAR:
-	4051 -> mux analógico de 3 bits
+	relay de dos vias (abierto y cerrado)
+	disipador para regulador de tension
+
+
+IDEAS
+llave para la tensión de entrada (doble + y menos)
+
+hay q medir si hay continua en la salida LABORATORIO, y el consumo de amperaje.... CUIDADO CON QUE TERMINAL CONECTAS PRIMERO tocar suave cada terminal
+led colgado de los 5V
+
+dos salidas ? si o no mmm poner seguidor ?
+
+Para hacer ahora:
+	-> capa a la salida
+	-> digital para led millones(13) e interruptor millones (14)
+	-> pote en el ampop y cambiar de salida
+
+
+comparador de tensión a la salida ? dos ? uno para under volt y otro para upper
+
