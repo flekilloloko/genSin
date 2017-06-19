@@ -5,9 +5,10 @@ tambien se puede colocar un verificador de variaciones bruscas (buena idea)
 
 
 COMPRAR:
-	relay de dos vias (abierto y cerrado)
+	llave de dos o tres vias (abierto y cerrado)
 	disipador para regulador de tension
 	pote 220 ohm
+	2 zenner
 
 IDEAS
 llave para la tensión de entrada (doble + y menos)
@@ -26,3 +27,6 @@ Para hacer ahora:
 comparador de tensión a la salida ? dos ? uno para under volt y otro para upper
 si es asi agregar otro/s led
 
+NOTAS:
+	1,05 V de amplitud ac
+	0.5 V de continua
