@@ -15,7 +15,7 @@ int RESET = 4;
 int Dout = 5;
 
 double frec;
-int lectura;
+double lectura;
 int POTE1 = A1, POTE2 = A2, POTE3 = A3, POTE4 = A4, POTE5 = A5, POTE6 = A6;  //puerto analógico para cada uno de los Potenciometros perilla
 int retardo = 8 ;
 const float resolucion = 0.0291;
@@ -29,16 +29,16 @@ void setup() {
   pinMode(FQ_UP, OUTPUT);
   pinMode(RESET, OUTPUT);
   pinMode(Dout, OUTPUT);
-  pinMode(SW, INPUT);
-  pinMode(LED_M, OUTPUT);
+//  pinMode(SW, INPUT);
+//  pinMode(LED_M, OUTPUT);
   DDS.begin(W_CLK,FQ_UP,Dout,RESET);        // inicializamos el hardware DDS
-  DDS.calibrate(124500000);                 // calibración fina del cristal del DDS
+  DDS.calibrate(124950000);                 // calibración fina del cristal del DDS
   digitalWrite(W_CLK, LOW);
   digitalWrite(FQ_UP, LOW);
   digitalWrite(RESET, LOW);
 }
 
-int convertirValor(Posicion perilla, int valor) {
+double convertirValor(Posicion perilla, double valor) {
     switch (perilla) {
         case Unidad:
             valor = valor*10/1024; break;
@@ -126,23 +126,24 @@ int convertirValor(Posicion perilla, int valor) {
 
 void loop() {
     
-  millon = digitalRead(SW);                 // leo el estado del interruptor frontal de Millones
-  digitalWrite(LED_M, millon);              // paso dicho parámetro al led y a los relays 
-
+  //millon = digitalRead(SW);                 // leo el estado del interruptor frontal de Millones
+  //digitalWrite(LED_M, millon);              // paso dicho parámetro al led y a los relays 
+  millon = LOW;
+  
   delay(retardo);
   lectura = analogRead(POTE1);
   //lectura = constrain(lectura, 10, 1010);
   if(millon == HIGH)
-    frec = convertirValor(UMillon, valor);
-  else frec = convertirValor(Unidad, valor);
+    frec = convertirValor(UMillon, lectura);
+  else frec = convertirValor(Unidad, lectura);
   //Serial.print("U: ");Serial.print(lectura); Serial.print("\t");      //salidas para debug
   
   
   delay(retardo);
   lectura = analogRead(POTE2);
   if(millon == HIGH)
-    frec = convertirValor(DMillon, valor);
-  else frec = convertirValor(Decena, valor);
+    frec += convertirValor(DMillon, lectura);
+  else frec += convertirValor(Decena, lectura);
   //Serial.print("D: ");Serial.print(lectura); Serial.print("\t");      //salidas para debug
   
   delay(retardo);
