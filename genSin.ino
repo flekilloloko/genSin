@@ -13,6 +13,7 @@ int W_CLK = 2;          //coneccionado de pines de control del DDS
 int FQ_UP = 3;
 int RESET = 4;
 int Dout = 5;
+int PW_LED = 13;        //Led de encendido
 
 double frec;
 double lectura;
@@ -29,6 +30,8 @@ void setup() {
   pinMode(FQ_UP, OUTPUT);
   pinMode(RESET, OUTPUT);
   pinMode(Dout, OUTPUT);
+  pinMode(PW_LED, OUTPUT);
+  
 //  pinMode(SW, INPUT);
 //  pinMode(LED_M, OUTPUT);
   DDS.begin(W_CLK,FQ_UP,Dout,RESET);        // inicializamos el hardware DDS
@@ -36,6 +39,7 @@ void setup() {
   digitalWrite(W_CLK, LOW);
   digitalWrite(FQ_UP, LOW);
   digitalWrite(RESET, LOW);
+  digitalWrite(PW_LED, HIGH);
 }
 
 double convertirValor(Posicion perilla, double valor) {
